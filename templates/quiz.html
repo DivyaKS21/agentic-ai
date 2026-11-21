@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adaptive Quiz | QuizForge AI</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .quiz-container {
+            max-width: 850px;
+            margin-top: 30px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .difficulty {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .question-number {
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 19px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #172554;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-label:hover {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .option-label:has(input:checked) {
+            background: #dbeafe;
+            border: 2px solid #2563eb;
+        }
+
+        .option-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: #2563eb;
+        }
+
+        .next-button {
+            background: #2563eb;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .next-button:hover {
+            background: #1d4ed8;
+        }
+
+        .progress-track {
+            height: 9px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin: 15px 0 30px;
+            overflow: hidden;
+        }
+
+        .progress-value {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <h2>QuizForge</h2>
+
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Notes</a>
+    <a href="/quiz">Take Quiz</a>
+    <a href="/result">My Reports</a>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+
+    <h1>Adaptive Assessment</h1>
+
+    <p>Questions adjust according to your performance.</p>
+
+
+    <div class="quiz-container">
+
+        <div class="quiz-card">
+
+            <div class="quiz-meta">
+
+                <span class="question-number">
+                    Question {{ question_number }} of {{ total }}
+                </span>
+
+                <span class="difficulty">
+                    {{ current_question.difficulty }} Level
+                </span>
+
+            </div>
+
+
+            <div class="progress-track">
+
+                <div class="progress-value"
+                     style="width: {{ (answered / total * 100) if total else 0 }}%">
+                </div>
+
+            </div>
+
+
+            <h2 class="question-text">
+                {{ current_question.question }}
+            </h2>
+
+
+            <form action="/answer" method="POST" id="answerForm">
+
+                {% for option in current_question.options %}
+
+                <label class="option-label">
+
+                    <input
+                        type="radio"
+                        name="answer"
+                        value="{{ option }}"
+                        required
+                    >
+
+                    <span>{{ option }}</span>
+
+                </label>
+
+                {% endfor %}
+
+
+                <button type="submit" class="next-button">
+
+                    {% if question_number == total %}
+                        Finish Assessment
+                    {% else %}
+                        Submit & Next Question →
+                    {% endif %}
+
+                </button>
+
+            </form>
+
+
+            <p style="margin-top:20px; color:#64748b; font-size:13px;">
+                Source: Page {{ current_question.page }}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

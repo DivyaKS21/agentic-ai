@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Quiz Results | QuizForge AI</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>QuizForge</h2>
+
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Notes</a>
+    <a href="/quiz">Take Quiz</a>
+    <a href="/result">My Reports</a>
+
+</div>
+
+
+<div class="main">
+
+    <h1>Assessment Results</h1>
+
+    <p>Your quiz performance summary.</p>
+
+    <br>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Your Score</h3>
+
+            <h1>{{ score }} / {{ total }}</h1>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Percentage</h3>
+
+            <h1>{{ percentage }}%</h1>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <h3>Question-wise Analysis</h3>
+
+        {% for item in results %}
+
+            <hr>
+
+            <br>
+
+            <h4>Question {{ loop.index }}</h4>
+
+            <p>{{ item.question }}</p>
+
+            <br>
+
+            <p>
+                Your Answer: {{ item.selected }}
+            </p>
+
+            <p>
+                Correct Answer: {{ item.correct }}
+            </p>
+
+            {% if item.is_correct %}
+
+                <p style="color:green;">
+                    Correct Answer!
+                </p>
+
+            {% else %}
+
+                <p style="color:red;">
+                    Incorrect Answer
+                </p>
+
+            {% endif %}
+
+            <p>Source: Page {{ item.page }}</p>
+
+            <br>
+
+        {% endfor %}
+
+    </div>
+
+    <br>
+
+    <a href="/upload">Take Another Quiz</a>
+
+</div>
+
+</body>
+</html>

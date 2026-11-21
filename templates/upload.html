@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Notes | QuizForge AI</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+    <h2>QuizForge</h2>
+
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Notes</a>
+    <a href="/quiz">Take Quiz</a>
+    <a href="/result">My Reports</a>
+
+</div>
+
+
+<!-- Main Content -->
+<div class="main">
+
+    <h1>Upload Course Notes</h1>
+
+    <p>Upload your PDF chapter to generate smart assessments.</p>
+
+
+    <!-- PDF Upload Section -->
+    <div class="card">
+
+        <h3>Select Your Study Material</h3>
+
+        <p>Choose a PDF file from your computer.</p>
+
+        <br>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input
+                type="file"
+                name="pdf_file"
+                accept=".pdf"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">
+                Upload and Extract Content
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Extracted Content Section -->
+    {% if success %}
+
+    <div class="card">
+
+        <h3>PDF Successfully Processed!</h3>
+
+        <p><strong>File Name:</strong> {{ filename }}</p>
+
+        <p><strong>Pages Containing Text:</strong> {{ pages }}</p>
+
+        <br>
+
+        <form action="/generate" method="POST">
+
+            <button type="submit">
+                Generate Quiz
+            </button>
+
+        </form>
+
+        <br>
+
+        <h3>Extracted PDF Content</h3>
+
+        {% for item in content %}
+
+            <h4>Page {{ item.page }}</h4>
+
+            <p>{{ item.content }}</p>
+
+            <br>
+
+            <hr>
+
+            <br>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizForge AI</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>QuizForge</h2>
+
+    <a href="/">Dashboard</a>
+    <a href="/upload">Upload Notes</a>
+    <a href="/quiz">Take Quiz</a>
+    <a href="/result">My Reports</a>
+</div>
+
+<div class="main">
+
+    <h1>Welcome to QuizForge AI</h1>
+    <p>Transform your course notes into smart assessments.</p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Upload Notes</h3>
+            <p>Upload your PDF study materials.</p>
+            <a href="/upload">Get Started →</a>
+        </div>
+
+        <div class="card">
+            <h3>Generate Quiz</h3>
+            <p>Create questions from your syllabus.</p>
+            <a href="/upload">Generate →</a>
+        </div>
+
+        <div class="card">
+            <h3>Adaptive Assessment</h3>
+            <p>Practice according to your performance.</p>
+            <a href="/quiz">Start Quiz →</a>
+        </div>
+
+        <div class="card">
+            <h3>Performance Report</h3>
+            <p>Understand your strong and weak topics.</p>
+            <a href="/result">View Report →</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
